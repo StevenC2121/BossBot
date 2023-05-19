@@ -11,7 +11,7 @@ const bot = new Client({
 bot.extendContext({
     variableOne: 'Variable number 1!',
 });
-bot.editStatus('dnd');
+bot.editStatus('Online');
 
 bot.on('error', (err) => {
     console.error(err);

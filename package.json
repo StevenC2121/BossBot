@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/StevenC2121/BossBot/issues"
   },
-  "homepage": "https://github.com/StevenC2121/BossBot#readme"
+  "homepage": "https://github.com/StevenC2121/BossBot#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "eris": "^0.17.2",
+    "yuuko": "^2.3.4"
+  }
 }

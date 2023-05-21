@@ -8,9 +8,6 @@ const bot = new Client({
     ignoreBots: true,
 });
 
-bot.extendContext({
-    variableOne: 'Variable number 1!',
-});
 bot.editStatus('Online');
 
 bot.on('error', (err) => {

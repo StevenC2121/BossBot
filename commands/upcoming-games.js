@@ -48,7 +48,63 @@ module.exports = new Command('upcoming', async (message, args) => {
         leagueCode = 'CLI';
         break;
       case 'help':
-        message.channel.createMessage('Valid Leagues include: \npl (Premier League)\ncl (Champions League)\nbl1 (Bundesliga)\nbsa (Campeonato Brasileiro Série A)\npd (Primera Division)\nfl1 (France Ligue 1)\nelc (English Championship)\nppl (Primeira Liga\nec (European Championship)\nsa (Italian Serie A)\nwc (World Cup)\ncli (Copa Libertadores)');
+        message.channel.createMessage({
+          embed: {
+            title: 'Valid League Inputs Include: ',
+            fields: [
+              {
+                name: 'PL',
+                value: 'Premier League',
+              },
+              {
+                name: 'CL',
+                value: 'Champions League',
+              },
+              {
+                name: 'BL1',
+                value: 'Bundesliga',
+              },
+              {
+                name: 'BSA',
+                value: 'Campeonato Brasileiro Série A',
+              },
+              {
+                name: 'PD',
+                value: 'Primera Division (LaLiga)',
+              },
+              {
+                name: 'FL1',
+                value: 'France Ligue 1',
+              },
+              {
+                name: 'ELC',
+                value: 'English Championship',
+              },
+              {
+                name: 'PPL',
+                value: 'Portuguese Primeira Liga',
+              },
+              {
+                name: 'EC',
+                value: 'European Championship',
+              },
+              {
+                name: 'SA',
+                value: 'Italian Serie A',
+              },
+              {
+                name: 'WC',
+                value: 'World Cup',
+              },
+              {
+                name: 'CLI',
+                value: 'Copa Libertadores',
+              },
+            ],
+            color: 15267908, 
+          },
+        });
+          
         return;
       default:
         message.channel.createMessage('Invalid league! Please provide a valid league for upcoming matches.');

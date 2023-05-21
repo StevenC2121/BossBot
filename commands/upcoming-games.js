@@ -47,6 +47,9 @@ module.exports = new Command('upcoming', async (message, args) => {
       case 'cli':
         leagueCode = 'CLI';
         break;
+      case 'help':
+        message.channel.createMessage('Valid Leagues include: \npl (Premier League)\ncl (Champions League)\nbl1 (Bundesliga)\nbsa (Campeonato Brasileiro Série A)\npd (Primera Division)\nfl1 (France Ligue 1)\nelc (English Championship)\nppl (Primeira Liga\nec (European Championship)\nsa (Italian Serie A)\nwc (World Cup)\ncli (Copa Libertadores)');
+        return;
       default:
         message.channel.createMessage('Invalid league! Please provide a valid league for upcoming matches.');
         return;

@@ -12,40 +12,53 @@ module.exports = new Command('upcoming', async (message, args) => {
 
     const league = args[0];
     let leagueCode;
+    let leagueFullName;
+
 
     switch (league.toLowerCase()) {
       case 'pl': 
         leagueCode = 'PL';
+        leagueFullName = "English Premier League";
         break;
       case 'cl': 
         leagueCode = 'CL';
+        leagueFullName = "UEFA Champions League";
         break;
       case 'wc': 
         leagueCode = 'WC';
+        leagueFullName = "World Cup";
         break;
       case 'bl1': 
         leagueCode = 'BL1';
+        leagueFullName = "Bundesliga";
         break;
       case 'ded':
         leagueCode = 'DED';
+        leagueFullName = "Eredivisie";
         break;
       case 'pd':
         leagueCode = 'PD'
+        leagueFullName = "LaLiga";
         break;
       case 'fl1':
         leagueCode = 'FL1';
+        leagueFullName = "France Ligue 1";
         break;
       case 'elc':
         leagueCode = 'ELC';
+        leagueFullName = "English Championship";
         break;
       case 'ppl':
         leagueCode = 'PPL';
+        leagueFullName = "Portuguese Primeira Liga";
         break;
       case 'sa': 
         leagueCode = 'SA';
+        leagueFullName = "Italian Serie A";
         break;
       case 'cli':
         leagueCode = 'CLI';
+        leagueFullName = "Copa Libertadores";
         break;
       case 'help':
         message.channel.createMessage({
@@ -142,7 +155,7 @@ module.exports = new Command('upcoming', async (message, args) => {
 
     message.channel.createMessage({
       embed: {
-        title: `Upcoming ${league.toUpperCase()} Matches`,
+        title: `Upcoming ${leagueFullName} Matches:`,
         fields: gameFields,
         color: 2123412,
       },

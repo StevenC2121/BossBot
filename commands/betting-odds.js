@@ -9,26 +9,25 @@ module.exports = new Command('odds', async (message, args) => {
             responseType: 'json',
         });
         const sportsData = response.body;
-
-        if (Array.isArray(sportsData)) {
-            console.log(`Successfully got ${sportsData.length} sports.`);
-
-            console.log("Here are the sports:");
-
-            sportsData.forEach((sport) => {
-                console.log(`Sport: ${sport.title}`);
-                console.log(`Description: ${sport.description}`);
-                console.log(`Group: ${sport.group}`);
-                console.log(`Active: ${sport.active}`);
-                console.log(`Has Outrights: ${sport.has_outrights}`);
-                console.log("----------------------------------");
-            });
-        } 
-        else {
-            console.log('No sports data found in the response.');
-        }
-    } 
-    catch (error) {
+        const activeSports = sportsData.filter((sport) => sport.active);
+        const sportsFields = activeSports.map((sport) => {
+            const sportTitle = sport.title;
+            const sportDesc = sport.description;
+            const sportGroup = sport.group;
+            const sportOutrights = sport.has_outrights;
+            return {
+                name: `${sportTitle} / ${sportDesc}`,
+                value: `Sport: ${sportGroup}`,
+            };
+        });
+        message.channel.createMessage({
+            embed: {
+                title: `Active Sports/Leagues With Available Betting Odds:`,
+                fields: sportsFields,
+                color: 2123412,
+            },
+        });
+    } catch (error) {
         console.error(error);
     }
 });

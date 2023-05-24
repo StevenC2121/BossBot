@@ -117,8 +117,6 @@ module.exports = new Command('upcoming', async (message, args) => {
             color: 15267908, 
           },
         });
-          
-        return;
       default:
         message.channel.createMessage('Invalid league! Please provide a valid league for upcoming matches.');
         return;

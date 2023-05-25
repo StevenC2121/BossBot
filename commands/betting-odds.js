@@ -15,14 +15,12 @@ module.exports = new Command('odds', async (message, args) => {
 
         let sportTitle;
         let sportDesc;
-        let sportGroup;
         let sportKey;
 
         switch (sportCode.toLowerCase()) {
             case 'nfl':
                 sportTitle = 'Football';
                 sportDesc = 'NFL';
-                sportGroup = 'Football';
                 sportKey = 'americanfootball_nfl';
                 break;
             // Add more cases for other sports
@@ -35,21 +33,25 @@ module.exports = new Command('odds', async (message, args) => {
             responseType: 'json',
         });
         const oddsData = response.body;
+        
 
         const teamOdds = oddsData.find((odds) => {
             const homeTeam = odds.home_team.toLowerCase();
             const awayTeam = odds.away_team.toLowerCase();
-            const startDate = new Date(odds.commence_time);
-            const options = {
-              timeZone: 'America/New_York',
-              month: '2-digit',
-              day: '2-digit',
-              year: 'numeric',
-            };
-            const formattedDate = startDate.toLocaleString('en-US', options);
             return homeTeam.includes(teamName) || awayTeam.includes(teamName);
         });
 
+        const startDate = new Date(teamOdds.commence_time);
+        const options = {
+          timeZone: 'America/New_York',
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true,
+        };
+        const formattedDate = startDate.toLocaleString('en-US', options);
         if (!teamOdds) {
             message.channel.createMessage(`No odds found for ${teamName} in ${sportTitle}.`);
             return;
@@ -63,7 +65,7 @@ module.exports = new Command('odds', async (message, args) => {
             .filter((bookmaker) => filteredBookmakers.includes(bookmaker.title))
             .forEach((bookmaker) => {
                 bookmaker.markets
-                    .filter((market) => market.last_update.includes('2023')) // Modify the condition to filter recent games based on the last_update field
+                    .filter((market) => market.last_update.includes('2023'))
                     .forEach((market) => {
                         const homeOutcome = market.outcomes.find((outcome) => outcome.name === teamOdds.home_team);
                         const awayOutcome = market.outcomes.find((outcome) => outcome.name === teamOdds.away_team);
@@ -84,7 +86,7 @@ module.exports = new Command('odds', async (message, args) => {
             });
             message.channel.createMessage({
                 embed: {
-                  title: `Betting Odds for ${sportDesc} (${sportTitle}) - ${teamOdds.home_team} vs ${teamOdds.away_team}`,
+                  title: `Odds for ${sportDesc} - ${teamOdds.home_team} vs ${teamOdds.away_team}\nDate: ${formattedDate} EST`,
                   fields: oddsFields,
                   color: 2123412,
                 },

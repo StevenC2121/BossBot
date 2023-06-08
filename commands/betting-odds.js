@@ -23,7 +23,11 @@ module.exports = new Command('odds', async (message, args) => {
                 sportDesc = 'NFL';
                 sportKey = 'americanfootball_nfl';
                 break;
-                // branch test
+            case 'nba':
+                sportTitle = 'Basketball';
+                sportDesc = 'NBA';
+                sportKey = 'basketball_nba';
+                break;
             // Add more cases for other sports
             default:
                 message.channel.createMessage('Invalid sport code! Please provide a valid sport code for odds.');
@@ -41,6 +45,11 @@ module.exports = new Command('odds', async (message, args) => {
             const awayTeam = odds.away_team.toLowerCase();
             return homeTeam.includes(teamName) || awayTeam.includes(teamName);
         });
+
+        if (!teamOdds) {
+            message.channel.createMessage(`No odds found for ${teamName} in ${sportTitle}.`);
+            return;
+        }
 
         const startDate = new Date(teamOdds.commence_time);
         const options = {

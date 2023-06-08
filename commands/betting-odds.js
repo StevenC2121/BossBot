@@ -23,6 +23,7 @@ module.exports = new Command('odds', async (message, args) => {
                 sportDesc = 'NFL';
                 sportKey = 'americanfootball_nfl';
                 break;
+                // branch test
             // Add more cases for other sports
             default:
                 message.channel.createMessage('Invalid sport code! Please provide a valid sport code for odds.');

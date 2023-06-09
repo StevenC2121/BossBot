@@ -28,6 +28,36 @@ module.exports = new Command('odds', async (message, args) => {
                 sportDesc = 'NBA';
                 sportKey = 'basketball_nba';
                 break;
+            case 'ncaaf':
+                sportTitle = 'Football';
+                sportDesc = 'NCAAF';
+                sportKey = 'americanfootball_ncaaf';
+                break;
+            case 'mlb':
+                sportTitle = 'Baseball';
+                sportDesc = 'MLB';
+                sportKey = 'baseball_mlb';
+                break;
+            case 'nhl':
+                sportTitle = 'Ice Hockey';
+                sportDesc = 'NHL';
+                sportKey = 'icehockey_nhl';
+                break;
+            case 'uefa nations league':
+                sportTitle = 'Soccer';
+                sportDesc = 'UEFA Nations League';
+                sportKey = 'soccer_uefa_nations_league';
+                break;
+            case 'mls':
+                sportTitle = 'Soccer';
+                sportDesc = 'MLS';
+                sportKey = 'soccer_usa_mls';
+                break;
+            case 'boxing':
+                sportTitle = 'Boxing';
+                sportDesc = 'Boxing';
+                sportKey = 'boxing_boxing';
+                break;                    
             // Add more cases for other sports
             default:
                 message.channel.createMessage('Invalid sport code! Please provide a valid sport code for odds.');

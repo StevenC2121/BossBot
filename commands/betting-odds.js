@@ -102,37 +102,34 @@ module.exports = new Command('odds', async (message, args) => {
         const oddsFields = [];
 
         teamOdds.bookmakers
-            .filter((bookmaker) => filteredBookmakers.includes(bookmaker.title))
-            .forEach((bookmaker) => {
-                let mainOdds = false;
-                bookmaker.markets
-                    .filter((market) => market.last_update.includes('2023'))
-                    .forEach((market) => {
-                        const homeOutcome = market.outcomes.find((outcome) => outcome.name === teamOdds.home_team);
-                        const awayOutcome = market.outcomes.find((outcome) => outcome.name === teamOdds.away_team);
-
-                        if (homeOutcome && awayOutcome && !mainOdds) {
-                            const bookmakerTitle = bookmaker.title;
-                            const homeOdds = homeOutcome.price;
-                            const awayOdds = awayOutcome.price;
-
-                            const oddsInfo = {
-                                name: `${bookmakerTitle}`,
-                                value: `Home: ${teamOdds.home_team} -> ${homeOdds}\nAway: ${teamOdds.away_team} -> ${awayOdds}`,
-                            };
-
-                            oddsFields.push(oddsInfo);
-                            mainOdds = true;
-                        }
-                    });
-            });
-            message.channel.createMessage({
-                embed: {
-                  title: `Odds for ${sportDesc} - ${teamOdds.home_team} vs ${teamOdds.away_team}\nDate: ${formattedDate} EST`,
-                  fields: oddsFields,
-                  color: 2123412,
-                },
-              });
+        .filter((bookmaker) => filteredBookmakers.includes(bookmaker.title))
+        .forEach((bookmaker) => {
+            const mainMarket = bookmaker.markets.find((market) => market.last_update.includes('2023'));
+            if (mainMarket) {
+                const homeOutcome = mainMarket.outcomes.find((outcome) => outcome.name === teamOdds.home_team);
+                const awayOutcome = mainMarket.outcomes.find((outcome) => outcome.name === teamOdds.away_team);
+    
+                if (homeOutcome && awayOutcome) {
+                    const bookmakerTitle = bookmaker.title;
+                    const homeOdds = homeOutcome.price;
+                    const awayOdds = awayOutcome.price;
+    
+                    const oddsInfo = {
+                        name: `${bookmakerTitle}`,
+                        value: `Home: ${teamOdds.home_team} -> ${homeOdds}\nAway: ${teamOdds.away_team} -> ${awayOdds}`,
+                    };
+    
+                    oddsFields.push(oddsInfo);
+                }
+            }
+        });
+        message.channel.createMessage({
+            embed: {
+                title: `Odds for ${sportDesc} - ${teamOdds.home_team} vs ${teamOdds.away_team}\nDate: ${formattedDate} EST`,
+                fields: oddsFields,
+                color: 2123412,
+            },
+        });
     } 
     catch (error) {
         console.error(error);

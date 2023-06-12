@@ -1,2 +1,2 @@
 # BossBot
-A Discord bot for server management, sports updates, betting odds, and more!
+A Discord bot for sports updates, betting odds, and more!
